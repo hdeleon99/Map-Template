@@ -7,6 +7,10 @@
 
 #include <forward_list>
 
+
+const int DEFAULT_BUCKETS = 10;
+const double DEFAULT_LOAD = 1.0;
+
 using namespace std;
 
 class KeyDoesNotExist {};
@@ -24,14 +28,17 @@ public:
     void SetMaxLoad(double maxLoad);
     void Rehash(int numBuckets);
 
+    // returning value associated with key, similar to "find"
     T operator[](K key);
 
     int Size() { return numKeys; }
 
     void ResetIterator();
+
     pair<K,T> GetNextPair();
 
 private:
+    // forward list is a linked list
     forward_list<pair<K,T>>* buckets;   // Each node contains a key and value
     int numBuckets;
     int numKeys;
